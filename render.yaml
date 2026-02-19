@@ -1,0 +1,36 @@
+services:
+  # Backend Service
+  - type: web
+    name: tradeverse-backend
+    runtime: node
+    plan: free
+    branch: main
+    rootDir: tradeverse-backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false  # User will be prompted to enter this
+      - key: JWT_SECRET
+        generateValue: true # Automatically generates a secure secret
+      - key: FRONTEND_URL
+        fromService:
+          type: static
+          name: tradeverse-frontend
+          property: url
+
+  # Frontend Service
+  - type: static
+    name: tradeverse-frontend
+    branch: main
+    rootDir: tradeverse-frontend
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: tradeverse-backend
+          property: url
