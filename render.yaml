@@ -8,9 +8,11 @@ services:
     rootDir: tradeverse-backend
     buildCommand: npm install
     startCommand: node server.js
-    envGroups:
-      - "TradeVerse Backend environment data"
     envVars:
+      - key: PORT
+        value: "10000"
+      - key: MONGO_URI
+        sync: false
       - key: FRONTEND_URL
         fromService:
           type: web
@@ -25,8 +27,6 @@ services:
     rootDir: tradeverse-frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
-    envGroups:
-      - "TradeVerse Frontend environment data"
     envVars:
       - key: VITE_API_URL
         fromService:
