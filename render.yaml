@@ -25,6 +25,8 @@ services:
     rootDir: tradeverse-frontend
     buildCommand: npm install && npm run build
     publishDir: dist
+    envGroups:
+      - "TradeVerse Frontend environment data"
     envVars:
       - key: VITE_API_URL
         fromService:
