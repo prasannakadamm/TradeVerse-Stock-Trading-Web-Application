@@ -15,9 +15,16 @@ connectDB();
 
 const app = express();
 const httpServer = createServer(app);
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  process.env.FRONTEND_URL // Allow production frontend
+].filter(Boolean);
+
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173", "http://localhost:3000"], // Allow frontend Vite/React
+    origin: allowedOrigins,
     methods: ["GET", "POST"]
   }
 });

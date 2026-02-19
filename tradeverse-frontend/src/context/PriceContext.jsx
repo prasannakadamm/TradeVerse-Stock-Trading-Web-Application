@@ -8,7 +8,8 @@ export function PriceProvider({ children }) {
     const [isConnected, setIsConnected] = useState(false);
 
     useEffect(() => {
-        const socket = io("http://localhost:5000");
+        const socketUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : "http://localhost:5000";
+        const socket = io(socketUrl);
 
         socket.on("connect", () => {
             setIsConnected(true);
