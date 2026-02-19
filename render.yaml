@@ -14,12 +14,12 @@ services:
     envVars:
       - key: FRONTEND_URL
         fromService:
-          type: static
+          type: static_site
           name: tradeverse-frontend
           property: url
 
   # Frontend Service
-  - type: static
+  - type: static_site
     name: tradeverse-frontend
     branch: main
     rootDir: tradeverse-frontend
