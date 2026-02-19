@@ -1,0 +1,232 @@
+@import "tailwindcss";
+
+:root {
+  /* 🏗️ Base Variables (Light Mode Default) */
+  --bg-primary: #f8fafc;
+  /* Slate 50 */
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  /* Slate 100 */
+
+  --text-primary: #0f172a;
+  /* Slate 900 */
+  --text-secondary: #64748b;
+  /* Slate 500 */
+  --text-muted: #94a3b8;
+  /* Slate 400 */
+
+  /* Glassmorphism - Light */
+  --glass-heavy: rgba(255, 255, 255, 0.7);
+  --glass-medium: rgba(255, 255, 255, 0.5);
+  --glass-lite: rgba(0, 0, 0, 0.03);
+  --glass-border: 1px solid rgba(0, 0, 0, 0.05);
+
+  /* Brand Accents */
+  --primary: #2563eb;
+  /* Blue 600 */
+  --primary-glow: rgba(37, 99, 235, 0.2);
+  --primary-dark: #1d4ed8;
+
+  --accent: #4f46e5;
+  /* Indigo 600 */
+  --accent-glow: rgba(79, 70, 229, 0.2);
+
+  /* Functional Colors */
+  --success: #059669;
+  /* Emerald 600 */
+  --success-glow: rgba(5, 150, 105, 0.2);
+
+  --danger: #dc2626;
+  /* Red 600 */
+  --danger-glow: rgba(220, 38, 38, 0.2);
+
+  /* Spacing & Layout */
+  --header-height: 64px;
+  --sidebar-width: 260px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Animations */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 0.2s;
+}
+
+/* 🌙 Dark Mode Overrides */
+.dark {
+  --bg-primary: #02040a;
+  /* Deepest Black */
+  --bg-secondary: #0b101a;
+  /* Navy Black */
+  --bg-tertiary: #131b2c;
+  /* Lighter Navy */
+
+  --text-primary: #f1f5f9;
+  /* Slate 100 */
+  --text-secondary: #94a3b8;
+  /* Slate 400 */
+  --text-muted: #64748b;
+  /* Slate 500 */
+
+  /* Glassmorphism - Dark */
+  --glass-heavy: rgba(13, 17, 28, 0.85);
+  --glass-medium: rgba(13, 17, 28, 0.6);
+  --glass-lite: rgba(255, 255, 255, 0.03);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+
+  /* Accents (Brighter for Dark Mode) */
+  --primary: #3b82f6;
+  /* Blue 500 */
+  --primary-glow: rgba(59, 130, 246, 0.4);
+  --primary-dark: #1d4ed8;
+
+  --accent: #6366f1;
+  /* Indigo 500 */
+  --accent-glow: rgba(99, 102, 241, 0.4);
+
+  --success: #10b981;
+  /* Emerald 500 */
+  --success-glow: rgba(16, 185, 129, 0.3);
+
+  --danger: #ef4444;
+  /* Red 500 */
+  --danger-glow: rgba(239, 68, 68, 0.3);
+}
+
+/* Reset & Base */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Typography Helpers */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Glass Card */
+.glass-card {
+  background: var(--glass-heavy);
+  backdrop-filter: blur(16px);
+  border: var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.1);
+  /* Lighter shadow by default */
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.dark .glass-card {
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+  /* Darker shadow for dark mode */
+}
+
+/* Form Elements */
+input,
+select,
+textarea {
+  background: var(--bg-secondary);
+  border: 1px solid var(--text-muted);
+  color: var(--text-primary);
+  /* Changed to use variable */
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1rem;
+  font-family: inherit;
+  transition: all var(--duration-fast);
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-glow);
+}
+
+/* Hide Search Clear Button (Chrome/Edge/Safari) */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+/* Animations */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-glow 3s infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
