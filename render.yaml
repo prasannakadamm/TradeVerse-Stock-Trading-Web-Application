@@ -2,29 +2,29 @@ services:
   # Backend Service
   - type: web
     name: tradeverse-backend
-    runtime: node
+    env: node
     plan: free
     branch: main
     rootDir: tradeverse-backend
     buildCommand: npm install
-    startCommand: node server.js
     startCommand: node server.js
     envGroups:
       - "TradeVerse Backend environment data"
     envVars:
       - key: FRONTEND_URL
         fromService:
-          type: static_site
+          type: web
           name: tradeverse-frontend
           property: url
 
   # Frontend Service
-  - type: static_site
+  - type: web
     name: tradeverse-frontend
+    env: static
     branch: main
     rootDir: tradeverse-frontend
     buildCommand: npm install && npm run build
-    publishDir: dist
+    staticPublishPath: dist
     envGroups:
       - "TradeVerse Frontend environment data"
     envVars:
