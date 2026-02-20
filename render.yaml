@@ -14,10 +14,7 @@ services:
       - key: MONGO_URI
         sync: false
       - key: FRONTEND_URL
-        fromService:
-          type: web
-          name: tradeverse-frontend
-          property: url
+        sync: false
 
   # Frontend Service
   - type: web
@@ -29,7 +26,4 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: tradeverse-backend
-          property: url
+        sync: false
