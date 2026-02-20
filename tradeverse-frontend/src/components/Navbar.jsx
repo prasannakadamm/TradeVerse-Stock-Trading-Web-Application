@@ -73,9 +73,9 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="w-[260px] h-[calc(100vh-40px)] fixed left-0 top-10 flex flex-col bg-[var(--bg-secondary)] border-r border-[var(--text-muted)]/10 z-50 shadow-xl transition-colors duration-300">
-      {/* Header */}
-      <div className="p-6 border-b border-[var(--text-muted)]/10">
+    <nav className="md:w-[260px] w-full h-16 md:h-[calc(100vh-40px)] fixed bottom-0 left-0 md:bottom-auto md:top-10 flex flex-row md:flex-col bg-[var(--bg-secondary)] border-t md:border-t-0 md:border-r border-[var(--text-muted)]/10 z-[60] shadow-[0_-4px_20px_rgba(0,0,0,0.1)] md:shadow-xl transition-colors duration-300">
+      {/* Header - Hidden on mobile */}
+      <div className="hidden md:block p-6 border-b border-[var(--text-muted)]/10">
         <div className="flex items-center gap-2 mb-6 cursor-pointer" onClick={() => navigate('/dashboard')}>
           <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-500/30">T</div>
           <span className="text-xl font-bold text-[var(--text-primary)] tracking-tight">TradeVerse</span>
@@ -94,29 +94,29 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Links */}
-      <div className="flex-1 overflow-y-auto py-4 px-3 custom-scrollbar flex flex-col gap-1">
+      {/* Links - Horizontal on mobile, Vertical on desktop */}
+      <div className="flex-1 md:overflow-y-auto w-full md:w-auto py-0 md:py-4 px-2 md:px-3 custom-scrollbar flex flex-row md:flex-col justify-around md:justify-start gap-1">
         {navItems.map((item) => {
           const isActive = location.pathname.startsWith(item.path);
           return (
             <button
               key={item.path}
               onClick={() => navigate(item.path)}
-              className={`flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all duration-200 group ${isActive
+              className={`flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 md:px-3 md:py-3 rounded-lg text-xs md:text-sm font-medium transition-all duration-200 group flex-1 md:flex-none ${isActive
                 ? 'bg-blue-600/10 text-blue-600 dark:text-blue-400 border border-blue-500/10'
                 : 'text-[var(--text-secondary)] hover:bg-[var(--text-primary)]/5 border border-transparent hover:text-[var(--text-primary)]'
                 }`}
             >
-              <span className={`text-lg transition-transform group-hover:scale-110 ${isActive ? 'scale-110' : ''}`}>{item.icon}</span>
-              {item.name}
-              {isActive && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>}
+              <span className={`text-xl transition-transform group-hover:scale-110 ${isActive ? 'scale-110' : ''}`}>{item.icon}</span>
+              <span className="hidden md:inline">{item.name}</span>
+              {isActive && <div className="hidden md:block ml-auto w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>}
             </button>
           );
         })}
       </div>
 
-      {/* Footer / Status */}
-      <div className="p-4 border-t border-[var(--text-muted)]/10 bg-[var(--bg-primary)]/50 backdrop-blur-sm">
+      {/* Footer / Status - Hidden on mobile */}
+      <div className="hidden md:block p-4 border-t border-[var(--text-muted)]/10 bg-[var(--bg-primary)]/50 backdrop-blur-sm">
         <div className="flex justify-between items-center text-xs mb-3">
           <span className="text-[var(--text-secondary)] font-medium">Market Status</span>
           <span className="text-[var(--text-muted)] px-1.5 py-0.5 rounded border border-[var(--text-muted)]/20 font-mono bg-[var(--bg-primary)]">{marketStatus.formattedTime}</span>

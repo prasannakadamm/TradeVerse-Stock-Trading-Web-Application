@@ -20,7 +20,7 @@ const Layout = () => {
                 <Navbar />
 
                 {/* Main Content Area */}
-                <main className="flex-1 ml-[260px] relative overflow-y-auto h-[calc(100vh-40px)] scroll-smooth custom-scrollbar">
+                <main className="flex-1 md:ml-[260px] pb-16 md:pb-0 relative overflow-y-auto h-[calc(100vh-40px)] scroll-smooth custom-scrollbar">
                     <div className="animate-fade-in min-h-full">
                         <Outlet />
                     </div>
