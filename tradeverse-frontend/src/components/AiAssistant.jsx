@@ -93,24 +93,42 @@ export default function AiAssistant() {
         }, 800);
     };
 
+    const quickQuestions = [
+        "What is RSI?",
+        "Explain MACD",
+        "How to manage risk?",
+        "What is a Limit Order?",
+        "Analyze Reliance"
+    ];
+
     const generateAiResponse = (query) => {
         const q = query.toLowerCase();
 
+        if (q.includes("what is rsi")) {
+            return "The **Relative Strength Index (RSI)** is a momentum oscillator that measures the speed and change of price movements. \n\n- **> 70**: Approaching overbought territory (potential sell signal).\n- **< 30**: Approaching oversold territory (potential buy signal).";
+        }
+        if (q.includes("explain macd")) {
+            return "**MACD (Moving Average Convergence Divergence)** is a trend-following momentum indicator.\n\nIt consists of the MACD line, a signal line, and a histogram. When the MACD line crosses above the signal line, it's considered a **bullish** signal. When it crosses below, it's a **bearish** signal.";
+        }
+        if (q.includes("how to manage risk")) {
+            return "**Risk Management Basics:**\n1. **Use Stop-Losses**: Always define your max acceptable loss before entering a trade.\n2. **Position Sizing**: Never risk more than 1-2% of your total capital on a single trade.\n3. **Diversify**: Don't put all your money into one stock or sector.\n4. **Risk/Reward Ratio**: Aim for trades where potential reward is at least 2x the risk.";
+        }
+        if (q.includes("what is a limit order")) {
+            return "A **Limit Order** is an order to buy or sell a stock at a specific price or better.\n\n- **Buy Limit**: Executes at your specified price or *lower*.\n- **Sell Limit**: Executes at your specified price or *higher*.\n\nIt guarantees the price, but does not guarantee the order will be filled if the market never reaches that price.";
+        }
+        if (q.includes("analyze reliance") || (q.includes("analyze") && q.includes("reliance"))) {
+            return "**RELIANCE INDUSTRIES (Simulation)**\n\n- **Trend**: Bullish consolidation.\n- **Support**: ₹2420\n- **Resistance**: ₹2485\n- **RSI**: 58 (Neutral/Bullish)\n\n*Outlook*: Breaking above ₹2485 with high volume could trigger a strong upward move.";
+        }
         if (q.includes("analyze") || q.includes("buy") || q.includes("sell")) {
             const sentiment = Math.random() > 0.5 ? "BULLISH" : "BEARISH";
             const rsi = Math.floor(Math.random() * 40) + 30; // 30-70
-            return `[DEMO MODE] Based on simulated technical indicators, the trend is **${sentiment}**. RSI is currently at ${rsi}. (Add VITE_OPENAI_API_KEY to .env for real AI)`;
+            return `Based on simulated technical indicators, the trend is **${sentiment}**. RSI is currently at ${rsi}.`;
         }
-
-        if (q.includes("learn") || q.includes("what is")) {
-            return "[DEMO MODE] Trading involves buying and selling financial instruments. RSI (Relative Strength Index) measures momentum. MACD shows trend direction. (Add VITE_OPENAI_API_KEY to .env for real AI)";
-        }
-
         if (q.includes("hello") || q.includes("hi")) {
-            return "Hi there! Ready to dominate the markets today?";
+            return "Hi there! I am your AI Trading Assistant. Click on one of the quick questions below to learn, or ask me for a simulated stock analysis!";
         }
 
-        return "[DEMO MODE] I can analyze stocks or explain trading terms. Please configure your OpenAI API Key in frontend/.env to unlock full intelligence.";
+        return "I am currently running in **Simulation Mode**. I can answer the quick questions provided, or you can ask me to 'Analyze [Stock]'. Please configure your OpenAI API Key in the `.env` file to unlock full open-ended intelligence.";
     };
 
     return (
@@ -274,6 +292,36 @@ export default function AiAssistant() {
             transform: scale(1.05);
             background: var(--accent-hover);
         }
+
+        .quick-asks {
+            padding: 0 1.2rem 0.8rem 1.2rem;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .quick-asks::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .quick-ask-chip {
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            color: #d8b4fe;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .quick-ask-chip:hover {
+            background: rgba(124, 58, 237, 0.4);
+            color: white;
+            border-color: #a78bfa;
+        }
       `}</style>
 
             {isOpen && (
@@ -289,7 +337,7 @@ export default function AiAssistant() {
                     <div className="chat-body">
                         {messages.map((m, i) => (
                             <div key={i} className={`msg ${m.role}`}>
-                                {m.text}
+                                <div dangerouslySetInnerHTML={{ __html: m.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>') }} />
                             </div>
                         ))}
                         {loading && (
@@ -301,6 +349,21 @@ export default function AiAssistant() {
                             </div>
                         )}
                         <div ref={messagesEndRef} />
+                    </div>
+
+                    <div className="quick-asks">
+                        {quickQuestions.map((qq, i) => (
+                            <button
+                                key={i}
+                                className="quick-ask-chip"
+                                onClick={() => {
+                                    setInput(qq);
+                                    setTimeout(() => handleSend(), 0);
+                                }}
+                            >
+                                {qq}
+                            </button>
+                        ))}
                     </div>
 
                     <div className="chat-input-area">
