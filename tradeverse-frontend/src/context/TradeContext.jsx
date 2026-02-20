@@ -16,8 +16,8 @@ export function TradeProvider({ children }) {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
-
-      const res = await axios.get("http://localhost:5000/api/portfolio", {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      const res = await axios.get(`${API_URL}/portfolio`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -67,7 +67,8 @@ export function TradeProvider({ children }) {
       }
 
       setLoading(true);
-      await axios.post("http://localhost:5000/api/trade/buy",
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      await axios.post(`${API_URL}/trade/buy`,
         { symbol, quantity: qty, price: price },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -97,7 +98,8 @@ export function TradeProvider({ children }) {
       }
 
       setLoading(true);
-      await axios.post("http://localhost:5000/api/trade/sell",
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      await axios.post(`${API_URL}/trade/sell`,
         { symbol, quantity: qty, price: price },
         { headers: { Authorization: `Bearer ${token}` } }
       );

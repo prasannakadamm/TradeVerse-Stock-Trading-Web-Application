@@ -16,7 +16,8 @@ export default function Reports() {
     const fetchData = async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch("http://localhost:5000/api/portfolio", {
+            const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+            const res = await fetch(`${API_URL}/admin/reports`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (res.ok) {
@@ -50,8 +51,8 @@ export default function Reports() {
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={`flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-t-lg transition-all relative ${activeTab === tab.id
-                                ? 'text-white bg-white/5'
-                                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                            ? 'text-white bg-white/5'
+                            : 'text-slate-400 hover:text-white hover:bg-white/5'
                             }`}
                     >
                         <span>{tab.icon}</span>
