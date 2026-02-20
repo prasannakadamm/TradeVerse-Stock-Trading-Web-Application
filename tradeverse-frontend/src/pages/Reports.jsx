@@ -17,7 +17,7 @@ export default function Reports() {
         try {
             const token = localStorage.getItem("token");
             const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-            const res = await fetch(`${API_URL}/admin/reports`, {
+            const res = await fetch(`${API_URL}/portfolio`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (res.ok) {
