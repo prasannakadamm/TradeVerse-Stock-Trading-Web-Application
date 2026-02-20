@@ -35,7 +35,7 @@ app.use("/api/admin", adminRoutes);
 
 // Health Check Endpoint for Render
 app.get("/health", (req, res) => {
-  res.status(200).json({ status: "up", timestamp: new Date().toISOString() });
+  res.status(200).json({ status: "OK" });
 });
 
 // Start Live Price Fetcher
