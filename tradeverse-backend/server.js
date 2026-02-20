@@ -33,6 +33,11 @@ app.use("/api/trade", tradeRoutes);
 app.use("/api/portfolio", portfolioRoutes);
 app.use("/api/admin", adminRoutes);
 
+// Health Check Endpoint for Render
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "up", timestamp: new Date().toISOString() });
+});
+
 // Start Live Price Fetcher
 import priceFetcher from "./utils/priceFetcher.js";
 priceFetcher(io);

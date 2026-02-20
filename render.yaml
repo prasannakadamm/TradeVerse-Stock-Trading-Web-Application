@@ -8,6 +8,7 @@ services:
     rootDir: tradeverse-backend
     buildCommand: npm install
     startCommand: node server.js
+    healthCheckPath: /health
     envVars:
       - key: PORT
         value: "10000"
